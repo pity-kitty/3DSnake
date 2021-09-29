@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SnakeController : MonoBehaviour
 {
@@ -12,6 +12,8 @@ public class SnakeController : MonoBehaviour
     [SerializeField] float Speed;
     private float RotationMultiplier = 6.0f;
     private Transform _transform;
+
+    public UnityEvent OnEat;
 
     void Start()
     {
@@ -55,6 +57,11 @@ public class SnakeController : MonoBehaviour
 
             var bone = Instantiate(BonePrefab, _transform.position, BonePrefab.gameObject.transform.rotation);
             Tails.Add(bone.transform);
+
+            if (OnEat != null)
+            {
+                OnEat.Invoke();
+            }
         }
     }
 }
