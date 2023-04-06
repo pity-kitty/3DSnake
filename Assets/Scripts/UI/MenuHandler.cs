@@ -6,10 +6,17 @@ using UnityEngine.UI;
 
 public class MenuHandler : MonoBehaviour
 {
+    [Header("Menu buttons")]
     [SerializeField] private Button playButton;
     [SerializeField] private ButtonAnimation playButtonAnimation;
     [SerializeField] private Button exitButton;
     [SerializeField] private ButtonAnimation exitButtonAnimation;
+    
+    [Header("Loading")]
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Image progress;
+
+    private AsyncOperation sceneLoading;
 
     private IEnumerator Start()
     {
@@ -28,7 +35,18 @@ public class MenuHandler : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene(1);
+        loadingScreen.SetActive(true);
+        sceneLoading = SceneManager.LoadSceneAsync(1);
+        StartCoroutine(SetProgress());
+    }
+
+    private IEnumerator SetProgress()
+    {
+        while (!sceneLoading.isDone)
+        {
+            progress.fillAmount = sceneLoading.progress;
+            yield return null;
+        }
     }
 
     private void ExitGame() 

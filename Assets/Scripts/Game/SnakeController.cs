@@ -1,67 +1,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SnakeController : MonoBehaviour
 {
-    [SerializeField] List<Transform> Tails;
+    [SerializeField] List<Transform> tails;
     [Range(0, 3)]
-    [SerializeField] float BonesDistance;
-    [SerializeField] GameObject BonePrefab;
+    [SerializeField] float bonesDistance = 0.55f;
+    [SerializeField] GameObject bonePrefab;
     [Range(0, 4)]
-    [SerializeField] float Speed;
+    [SerializeField] float speed = 0.2f;
+    [SerializeField] private LayerMask foodLayer;
+    [SerializeField] private LayerMask obstacleLayer;
+    
     private float RotationMultiplier = 6.0f;
-    private Transform _transform;
+    private Transform snakeTransform;
 
     public UnityEvent OnEat;
 
     void Start()
     {
-        _transform = GetComponent<Transform>();        
+        snakeTransform = GetComponent<Transform>();        
     }
     void Update()
     {
-        MoveSnake(_transform.position + _transform.forward * Speed);
+        MoveSnake(snakeTransform.position + snakeTransform.forward * speed);
 
         float angle = Input.GetAxis("Horizontal") * RotationMultiplier;
-        _transform.Rotate(0, angle, 0);
+        snakeTransform.Rotate(0, angle, 0);
     }
 
     void MoveSnake(Vector3 newPosition)
     {
-        float sqrDistance = BonesDistance * BonesDistance;
-        Vector3 previousPosition = _transform.position;
+        var sqrDistance = bonesDistance * bonesDistance;
+        var previousPosition = snakeTransform.position;
 
-        foreach(Transform bone in Tails)
+        foreach(var bone in tails)
         {
             if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
             {
-                Vector3 temp = bone.position;
-                bone.position = previousPosition;
-                previousPosition = temp;
+                (bone.position, previousPosition) = (previousPosition, bone.position);
             }
-            else
-            {
-                break;
-            }
+            else break;
         }
 
-        _transform.position = newPosition;
+        snakeTransform.position = newPosition;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Food"))
+        if (((1<<collision.gameObject.layer) & foodLayer) != 0)
         {
             Destroy(collision.gameObject);
 
-            var bone = Instantiate(BonePrefab, _transform.position, BonePrefab.gameObject.transform.rotation);
-            Tails.Add(bone.transform);
+            var bone = Instantiate(bonePrefab, snakeTransform.position, bonePrefab.gameObject.transform.rotation);
+            tails.Add(bone.transform);
 
             if (OnEat != null)
             {
                 OnEat.Invoke();
             }
+
+            return;
+        }
+
+        if (((1<<collision.gameObject.layer) & obstacleLayer) != 0)
+        {
+            SceneManager.LoadScene(1);
         }
     }
 }
