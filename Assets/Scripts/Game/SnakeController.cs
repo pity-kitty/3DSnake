@@ -1,4 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using Game;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,6 +17,11 @@ public class SnakeController : MonoBehaviour
     [SerializeField] float speed = 0.2f;
     [SerializeField] private LayerMask foodLayer;
     [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private Spawner spawner;
+
+    [Header("Start properties")]
+    [SerializeField] private Vector3 startPosition;
+    [SerializeField] private int startTailLength = 3;
     
     private float RotationMultiplier = 6.0f;
     private Transform snakeTransform;
@@ -22,8 +31,10 @@ public class SnakeController : MonoBehaviour
     void Start()
     {
         snakeTransform = GetComponent<Transform>();        
+        spawner.SpawnFood();
     }
-    void Update()
+    
+    void FixedUpdate()
     {
         MoveSnake(snakeTransform.position + snakeTransform.forward * speed);
 
@@ -53,21 +64,30 @@ public class SnakeController : MonoBehaviour
         if (((1<<collision.gameObject.layer) & foodLayer) != 0)
         {
             Destroy(collision.gameObject);
-
-            var bone = Instantiate(bonePrefab, snakeTransform.position, bonePrefab.gameObject.transform.rotation);
-            tails.Add(bone.transform);
-
-            if (OnEat != null)
-            {
-                OnEat.Invoke();
-            }
-
+            AddBoneToTail();
             return;
         }
 
         if (((1<<collision.gameObject.layer) & obstacleLayer) != 0)
         {
-            SceneManager.LoadScene(1);
+            RestartGame();
         }
+    }
+
+    private void AddBoneToTail()
+    {
+        var bone = Instantiate(bonePrefab, snakeTransform.position, bonePrefab.gameObject.transform.rotation);
+        tails.Add(bone.transform);
+        spawner.SpawnFood();
+        OnEat?.Invoke();
+    }
+
+    private void RestartGame()
+    {
+        for (int i = 3; i < tails.Count; i++)
+            Destroy(tails[i].gameObject);
+        tails.RemoveRange(3, tails.Count - 3);
+        snakeTransform.position = startPosition;
+        snakeTransform.rotation = Quaternion.identity;
     }
 }

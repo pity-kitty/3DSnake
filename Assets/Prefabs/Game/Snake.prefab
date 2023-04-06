@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 990634511961952221}
   - component: {fileID: 2393387822207043914}
   - component: {fileID: 6821402407709393846}
-  - component: {fileID: 3206848602234876115}
   m_Layer: 0
   m_Name: Pupil
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3206848602234876115
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427847068833178532}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3170514539469744913
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +92,6 @@ GameObject:
   - component: {fileID: 1971886694822943572}
   - component: {fileID: 785755202466620639}
   - component: {fileID: 8952734659811951445}
-  - component: {fileID: 8663576244910535093}
   m_Layer: 0
   m_Name: REye
   m_TagString: Untagged
@@ -178,19 +163,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8663576244910535093
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3170514539469744913}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4862366176807083710
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,19 +275,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e79841e9f746942a6a9020d89d916c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tails:
+  tails:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  BonesDistance: 0.55
-  BonePrefab: {fileID: 4828959840816977563, guid: d5731e7b0638a7e44b6417c4a9538c2c, type: 3}
-  Speed: 0.2
+  bonesDistance: 0.55
+  bonePrefab: {fileID: 4828959840816977563, guid: d5731e7b0638a7e44b6417c4a9538c2c, type: 3}
+  speed: 0.2
   foodLayer:
     serializedVersion: 2
     m_Bits: 128
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
+  spawner: {fileID: 0}
+  startPosition: {x: 0, y: 0.5, z: 10.66435}
+  startTailLength: 3
   OnEat:
     m_PersistentCalls:
       m_Calls:
@@ -466,7 +441,6 @@ GameObject:
   - component: {fileID: 8969214340492031330}
   - component: {fileID: 5536924811059980813}
   - component: {fileID: 3165101838118856096}
-  - component: {fileID: 5188016085332460884}
   m_Layer: 0
   m_Name: Pupil
   m_TagString: Untagged
@@ -537,19 +511,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5188016085332460884
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6268370282282871530}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6519973786997444188
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +522,6 @@ GameObject:
   - component: {fileID: 2581653167431479368}
   - component: {fileID: 3184647352829029776}
   - component: {fileID: 5031296660771633381}
-  - component: {fileID: 5581868822244639629}
   m_Layer: 0
   m_Name: LEye
   m_TagString: Untagged
@@ -633,16 +593,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5581868822244639629
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6519973786997444188}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
