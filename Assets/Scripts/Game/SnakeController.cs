@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using Game;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -22,6 +19,9 @@ public class SnakeController : MonoBehaviour
     [Header("Start properties")]
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private int startTailLength = 3;
+
+    [Space] 
+    [SerializeField] private Score score;
     
     private float RotationMultiplier = 6.0f;
     private Transform snakeTransform;
@@ -40,6 +40,8 @@ public class SnakeController : MonoBehaviour
 
         float angle = Input.GetAxis("Horizontal") * RotationMultiplier;
         snakeTransform.Rotate(0, angle, 0);
+
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene(0);
     }
 
     void MoveSnake(Vector3 newPosition)
@@ -76,9 +78,10 @@ public class SnakeController : MonoBehaviour
 
     private void AddBoneToTail()
     {
-        var bone = Instantiate(bonePrefab, snakeTransform.position, bonePrefab.gameObject.transform.rotation);
+        var bone = Instantiate(bonePrefab, tails[tails.Count - 1].position, bonePrefab.gameObject.transform.rotation);
         tails.Add(bone.transform);
         spawner.SpawnFood();
+        score.AddPoint();
         OnEat?.Invoke();
     }
 
@@ -86,8 +89,9 @@ public class SnakeController : MonoBehaviour
     {
         for (int i = 3; i < tails.Count; i++)
             Destroy(tails[i].gameObject);
-        tails.RemoveRange(3, tails.Count - 3);
+        tails.RemoveRange(startTailLength, tails.Count - 3);
         snakeTransform.position = startPosition;
         snakeTransform.rotation = Quaternion.identity;
+        score.ResetPoints();
     }
 }
