@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Game;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class SnakeController : MonoBehaviour
 {
+    private const string AxisName = "Horizontal";
+    
     [SerializeField] List<Transform> tails;
     [Range(0, 3)]
     [SerializeField] float bonesDistance = 0.55f;
@@ -25,6 +28,7 @@ public class SnakeController : MonoBehaviour
     
     private float RotationMultiplier = 6.0f;
     private Transform snakeTransform;
+    private bool isAlive = true;
 
     public UnityEvent OnEat;
 
@@ -32,16 +36,25 @@ public class SnakeController : MonoBehaviour
     {
         snakeTransform = GetComponent<Transform>();        
         spawner.SpawnFood();
+        score.OnRestartPressed += RestartGame;
+        StartCoroutine(ControlMovement());
     }
     
-    void FixedUpdate()
+    void Update()
     {
-        MoveSnake(snakeTransform.position + snakeTransform.forward * speed);
-
-        float angle = Input.GetAxis("Horizontal") * RotationMultiplier;
-        snakeTransform.Rotate(0, angle, 0);
-
         if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene(0);
+    }
+
+    private IEnumerator ControlMovement()
+    {
+        while (isAlive)
+        {
+            var newPosition = snakeTransform.position + snakeTransform.forward * speed;
+            MoveSnake(newPosition);
+            var angle = Input.GetAxis(AxisName) * RotationMultiplier;
+            snakeTransform.Rotate(0, angle, 0);
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     void MoveSnake(Vector3 newPosition)
@@ -72,7 +85,8 @@ public class SnakeController : MonoBehaviour
 
         if (((1<<collision.gameObject.layer) & obstacleLayer) != 0)
         {
-            RestartGame();
+            isAlive = false;
+            score.ShowRestartScreen();
         }
     }
 
@@ -92,6 +106,7 @@ public class SnakeController : MonoBehaviour
         tails.RemoveRange(startTailLength, tails.Count - 3);
         snakeTransform.position = startPosition;
         snakeTransform.rotation = Quaternion.identity;
-        score.ResetPoints();
+        isAlive = true;
+        StartCoroutine(ControlMovement());
     }
 }

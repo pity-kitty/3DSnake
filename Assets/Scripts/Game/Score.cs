@@ -1,5 +1,8 @@
-﻿using TMPro;
+﻿using System;
+using DefaultNamespace;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -7,14 +10,24 @@ namespace Game
     {
         [SerializeField] private TMP_Text sessionHighScore;
         [SerializeField] private TMP_Text currentScore;
+        
+        [Header("Restart UI")]
+        [SerializeField] private CanvasGroup restartUi;
+        [SerializeField] private Button restartButton;
 
         private int score;
         private int highScore;
+
+        public event Action OnRestartPressed;
+
+        private void Awake()
+        {
+            restartButton.onClick.AddListener(RestartGame);
+        }
         
         private void Start()
         {
-            sessionHighScore.SetText(highScore.ToString());
-            currentScore.SetText(score.ToString());
+            ResetPoints();
         }
 
         public void AddPoint()
@@ -25,10 +38,23 @@ namespace Game
 
         public void ResetPoints()
         {
-            if (score > highScore) highScore = score;
-            score = 0;
             sessionHighScore.SetText(highScore.ToString());
             currentScore.SetText(score.ToString());
+        }
+
+        public void ShowRestartScreen()
+        {
+            restartUi.ShowCanvasGroup(true);
+            if (score > highScore) highScore = score;
+            sessionHighScore.SetText(highScore.ToString());
+        }
+
+        public void RestartGame()
+        {
+            score = 0;
+            ResetPoints();
+            OnRestartPressed?.Invoke();
+            restartUi.ShowCanvasGroup(false);
         }
     }
 }
