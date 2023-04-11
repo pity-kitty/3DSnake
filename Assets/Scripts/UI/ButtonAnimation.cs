@@ -28,31 +28,19 @@ namespace UI
                 buttonTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, EaseOutBounce(i));
                 yield return null;
             }
-
+            
             buttonTransform.localScale = Vector3.one;
             button.interactable = true;
         }
-        
-        private float EaseOutBack(float x)
+
+        private float EaseOutBounce(float x)
         {
-            float c1 = 1.70158f;
-            float c3 = c1 + 1;
-            return 1 + c3 * Mathf.Pow(x - 1, 3) + c1 * Mathf.Pow(x - 1, 2);
-        }
-        
-        private float EaseOutBounce(float x) {
             float n1 = 7.5625f;
             float d1 = 2.75f;
-
-            if (x < 1 / d1) {
-                return n1 * x * x;
-            } else if (x < 2 / d1) {
-                return n1 * (x -= 1.5f / d1) * x + 0.75f;
-            } else if (x < 2.5 / d1) {
-                return n1 * (x -= 2.25f / d1) * x + 0.9375f;
-            } else {
-                return n1 * (x -= 2.625f / d1) * x + 0.984375f;
-            }
+            if (x < 1 / d1) return n1 * x * x;
+            if (x < 2 / d1) return n1 * (x -= 1.5f / d1) * x + 0.75f;
+            if (x < 2.5 / d1) return n1 * (x -= 2.25f / d1) * x + 0.9375f;
+            return n1 * (x -= 2.625f / d1) * x + 0.984375f;
         }
     }
 }
