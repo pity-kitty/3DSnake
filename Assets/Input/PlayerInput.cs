@@ -32,8 +32,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""ccb53708-c2da-42b2-89a9-a8995aadd8ab"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": ""Scale(factor=0.9)"",
-                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {

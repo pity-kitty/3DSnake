@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace;
 using Game;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SnakeController : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class SnakeController : MonoBehaviour
     [SerializeField] private GameObject bonePrefab;
     [Range(4, 10)]
     [SerializeField] private float speed = 8f;
+    [SerializeField] private float rotationMultiplier = 200.0f;
     [SerializeField] private LayerMask foodLayer;
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private Spawner spawner;
@@ -29,7 +28,6 @@ public class SnakeController : MonoBehaviour
     [SerializeField] private CanvasGroup onScreenButtons;
 
     private PlayerInput playerInput;
-    private float rotationMultiplier = 6.0f;
     private Transform snakeTransform;
     private bool isAlive = true;
 
@@ -54,27 +52,24 @@ public class SnakeController : MonoBehaviour
 #endif
     }
     
-    private void LoadMenu(InputAction.CallbackContext context)
-    {
-        SceneManager.LoadScene(0);
-    }
+    private void LoadMenu(InputAction.CallbackContext context) => SceneManager.LoadScene(0);
 
     private IEnumerator ControlMovement()
     {
         while (isAlive)
         {
-            var newPosition = snakeTransform.position + snakeTransform.forward * speed * Time.deltaTime;
-            MoveSnake(newPosition);
-            var angle = playerInput.SnakeInput.HorizontalAxis.ReadValue<float>() * rotationMultiplier;
-            snakeTransform.Rotate(0, angle, 0);
-            yield return new WaitForFixedUpdate();
+            MoveSnake();
+            RotateSnake();
+            yield return null;
         }
     }
 
-    private void MoveSnake(Vector3 newPosition)
+    private void MoveSnake()
     {
+        var snakePosition = snakeTransform.position;
+        var newPosition = snakePosition + snakeTransform.forward * speed * Time.deltaTime;
         var sqrDistance = bonesDistance * bonesDistance;
-        var previousPosition = snakeTransform.position;
+        var previousPosition = snakePosition;
         foreach(var bone in tails)
         {
             if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
@@ -82,6 +77,12 @@ public class SnakeController : MonoBehaviour
             else break;
         }
         snakeTransform.position = newPosition;
+    }
+
+    private void RotateSnake()
+    {
+        var angle = playerInput.SnakeInput.HorizontalAxis.ReadValue<float>() * rotationMultiplier * Time.deltaTime;
+        snakeTransform.Rotate(0, angle, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -123,5 +124,6 @@ public class SnakeController : MonoBehaviour
     private void OnDestroy()
     {
         playerInput.SnakeInput.Escape.performed -= LoadMenu;
+        playerInput.Disable();
     }
 }

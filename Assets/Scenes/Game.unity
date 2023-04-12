@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -466,8 +466,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1974,18 +1974,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 20
+    m_Right: 20
+    m_Top: 20
+    m_Bottom: 20
   m_ChildAlignment: 4
-  m_Spacing: 10
+  m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!225 &361619576
 CanvasGroup:
@@ -3494,7 +3494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3545,8 +3545,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -13375,14 +13375,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2427847068833178532, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3170514539469744913, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4862366176807083706, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -13432,17 +13424,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 980898716}
     - target: {fileID: 4862366176807083707, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: speed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862366176807083707, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
       propertyPath: spawner
       value: 
       objectReference: {fileID: 263828604}
-    - target: {fileID: 4862366176807083707, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: buttonsGroup
-      value: 
-      objectReference: {fileID: 361619575}
     - target: {fileID: 4862366176807083707, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
       propertyPath: onScreenButtons
       value: 
@@ -13462,18 +13446,6 @@ PrefabInstance:
     - target: {fileID: 4862366176807083710, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
       propertyPath: m_Name
       value: Snake
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862366176807083710, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6268370282282871530, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6519973786997444188, guid: 870a8f80664fa7a43844940f678f128b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 870a8f80664fa7a43844940f678f128b, type: 3}

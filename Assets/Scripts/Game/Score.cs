@@ -20,14 +20,22 @@ namespace Game
 
         public event Action OnRestartPressed;
 
-        private void Awake()
+        private void Awake() => restartButton.onClick.AddListener(RestartGame);
+        
+        private void Start() => ResetPoints();
+
+        private void RestartGame()
         {
-            restartButton.onClick.AddListener(RestartGame);
+            score = 0;
+            ResetPoints();
+            OnRestartPressed?.Invoke();
+            restartUi.ShowCanvasGroup(false);
         }
         
-        private void Start()
+        private void ResetPoints()
         {
-            ResetPoints();
+            sessionHighScore.SetText(highScore.ToString());
+            currentScore.SetText(score.ToString());
         }
 
         public void AddPoint()
@@ -36,25 +44,11 @@ namespace Game
             currentScore.SetText(score.ToString());
         }
 
-        public void ResetPoints()
-        {
-            sessionHighScore.SetText(highScore.ToString());
-            currentScore.SetText(score.ToString());
-        }
-
         public void ShowRestartScreen()
         {
             restartUi.ShowCanvasGroup(true);
             if (score > highScore) highScore = score;
             sessionHighScore.SetText(highScore.ToString());
-        }
-
-        public void RestartGame()
-        {
-            score = 0;
-            ResetPoints();
-            OnRestartPressed?.Invoke();
-            restartUi.ShowCanvasGroup(false);
         }
     }
 }

@@ -281,7 +281,8 @@ MonoBehaviour:
   - {fileID: 0}
   bonesDistance: 0.55
   bonePrefab: {fileID: 4828959840816977563, guid: d5731e7b0638a7e44b6417c4a9538c2c, type: 3}
-  speed: 0.2
+  speed: 8
+  rotationMultiplier: 200
   foodLayer:
     serializedVersion: 2
     m_Bits: 128

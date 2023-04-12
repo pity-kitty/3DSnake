@@ -1,6 +1,7 @@
 using System.Collections;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,10 +17,14 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Image progress;
 
+    private PlayerInput playerInput;
     private AsyncOperation sceneLoading;
 
     private IEnumerator Start()
     {
+        playerInput = new PlayerInput();
+        playerInput.Enable();
+        playerInput.SnakeInput.Escape.performed += ExitGame;
         playButton.onClick.AddListener(StartGame);
         exitButton.onClick.AddListener(ExitGame);
         yield return new WaitForSeconds(1f);
@@ -29,6 +34,8 @@ public class MenuHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        playerInput.SnakeInput.Escape.performed -= ExitGame;
+        playerInput.Disable();
         playButton.onClick.RemoveListener(StartGame);
         exitButton.onClick.RemoveListener(ExitGame);
     }
@@ -49,8 +56,7 @@ public class MenuHandler : MonoBehaviour
         }
     }
 
-    private void ExitGame() 
-    {
-        Application.Quit();
-    }
+    private void ExitGame() => Application.Quit();
+
+    private void ExitGame(InputAction.CallbackContext callbackContext) => ExitGame();
 }
