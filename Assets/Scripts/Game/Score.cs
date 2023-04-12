@@ -1,5 +1,5 @@
 ﻿using System;
-using DefaultNamespace;
+using Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "euzxvg7txk9xss75",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "euzxvg7txk9xss75",
+        "name": "com.DefaultCompany.Snake",
+        "processId": 30070,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,24 @@
             "deviceId": "euzxvg7txk9xss75",
             "name": "com.miui.home",
             "processId": 2039,
+            "exited": false
+        },
+        {
+            "deviceId": "euzxvg7txk9xss75",
+            "name": "com.DefaultCompany.Snake",
+            "processId": 27899,
+            "exited": false
+        },
+        {
+            "deviceId": "euzxvg7txk9xss75",
+            "name": "com.DefaultCompany.Snake",
+            "processId": 29046,
+            "exited": false
+        },
+        {
+            "deviceId": "euzxvg7txk9xss75",
+            "name": "com.DefaultCompany.Snake",
+            "processId": 30070,
             "exited": false
         }
     ],

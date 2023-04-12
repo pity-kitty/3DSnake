@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Extensions
 {
     public static class CustomExtensions
     {
